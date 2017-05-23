@@ -1,0 +1,25 @@
+{
+  "name": "xspace",
+  "version": "0.0.1",
+  "description": "express server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefpi/xspace.git"
+  },
+  "author": "stefpi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stefpi/xspace/issues"
+  },
+  "homepage": "https://github.com/stefpi/xspace#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "password-hash": "^1.2.2",
+    "persistent-cache": "^1.1.1"
+  }
+}
