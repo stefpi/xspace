@@ -18,6 +18,7 @@
   "homepage": "https://github.com/stefpi/xspace#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "cache": "^1.1.2",
     "express": "^4.15.3",
     "password-hash": "^1.2.2",
     "persistent-cache": "^1.1.1"
