@@ -13,7 +13,8 @@ app.get('/', function (req, res) {
 	res.sendFile(path.join(__dirname+'/public/login.html'));
 });
 
-app.use(express.static('/public'));
+app.use(express.static(__dirname + '/public'));
+app.use('/styles', express.static(__dirname + '/styles'));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.post('/register', function(req, res) {
@@ -59,15 +60,20 @@ app.post('/login', function(req, res) {
 		} else if (profile) {
 			if (passHash.verify(req.body.password, profile.password)){
 				console.log('You have authenticated!');
-				res.sendFile(path.join(__dirname+'/public/homepage`.html'));
+				res.sendFile(path.join(__dirname+'/public/homepage.html'));
+				// res.sendFile(path.join(__dirname+'/public/css.css'));
 			} else {
 				console.log('Authentication faliure!');
-				res.send({ redirect: '/login'});
+				res.sendFile(path.join(__dirname+'/public/login.html'));
 			}
 		} else {
 			console.log(err);
 		} 
 	});	
+});
+
+app.post('/homepage', function(req, res) {
+
 });
 
 app.listen(3000, function () {

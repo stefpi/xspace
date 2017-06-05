@@ -37,6 +37,10 @@ node_modules/
 cache/
 jspm_packages/
 
+# MAC OSX dependencies
+styles/.DS_Store
+.DS_Store
+
 # Typescript v1 declaration files
 typings/
 
