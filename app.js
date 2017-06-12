@@ -5,12 +5,19 @@ const passHash = require('password-hash');
 const cache = require('persistent-cache');
 const path = require('path');
 const fs = require('fs');
+const nodeMailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
+
 
 const users = cache();
 const app = express();
 
 app.get('/', function (req, res) {
 	res.sendFile(path.join(__dirname+'/public/login.html'));
+});
+
+app.get('/register', function (req, res) {
+	res.sendFile(path.join(__dirname+'/public/register.html'));
 });
 
 app.use(express.static(__dirname + '/public'));
@@ -21,9 +28,11 @@ app.post('/register', function(req, res) {
   console.log('entering register');
   var username = req.body.username;
   var password = passHash.generate(req.body.password);
+  var check = passHash.verify(req.body.passwordrepeat, password);
 
+//User Registration
   users.get(username, function(err, user){
-	if (!err && !user) {
+	if (!err && !user && check) {
 		var profile = {
 			'username': username,
 			'password': password
@@ -34,20 +43,27 @@ app.post('/register', function(req, res) {
 				res.send(err);
 			} else {
 				console.log(`\n Account has been registered as ${username}`);
+				console.log('\n'+JSON.stringify(profile));
+				console.log('Account has been registered');
+				res.sendFile(path.join(__dirname+'/public/login.html'));
 			}
 		});
-			console.log('\n'+JSON.stringify(profile));
-			res.send('Account has been registered');
 		} else if (user) {
 			console.log('That account already exists');
 			res.send('That account already exists');
+			res.sendFile(path.join(__dirname+'/public/login.html'));
 		} else if (err) {
 			console.log(err)
 			res.send(err)
+		} else if (!check) {
+			console.log('passwords do not match');
+			res.send('passwords do not match...');
+			res.sendFile(path.join(__dirname+'/public/passnotmatch.html'));
 		}
 	});
 });
 
+//User Login
 app.post('/login', function(req, res) {
 	console.log('entering login')
 	const username = req.body.username;
@@ -60,6 +76,7 @@ app.post('/login', function(req, res) {
 		} else if (profile) {
 			if (passHash.verify(req.body.password, profile.password)){
 				console.log('You have authenticated!');
+
 				res.sendFile(path.join(__dirname+'/public/homepage.html'));
 				// res.sendFile(path.join(__dirname+'/public/css.css'));
 			} else {
@@ -72,6 +89,7 @@ app.post('/login', function(req, res) {
 	});	
 });
 
+//Homepage -- Sending Emails
 app.post('/homepage', function(req, res) {
 
 });

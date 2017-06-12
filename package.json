@@ -21,6 +21,8 @@
     "cache": "^1.1.2",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
+    "nodemailer": "^4.0.1",
+    "nodemon": "^1.11.0",
     "password-hash": "^1.2.2",
     "persistent-cache": "^1.1.1"
   }
