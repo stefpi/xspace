@@ -89,9 +89,39 @@ app.post('/login', function(req, res) {
 	});	
 });
 
-//Homepage -- Sending Emails
 app.post('/homepage', function(req, res) {
+	
+});
 
+//Homepage -- Sending Emails
+app.post('/mail', function(req, res) {
+	const Service = req.body.service;
+	const email = req.body.email;
+	const emailPass = req.body.pass;
+	const recipient = req.body.recipient;
+	const text = req.body.text;
+
+	var transporter = nodeMailer.createTransport({
+  		service: Service,
+  		auth: {
+   			user: email,
+    		pass: emailPass
+  		}
+	});
+
+	var mailOptions = {
+  		from: email,
+  		to: recipient,
+  		text: text
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+  		if (error) {
+    		console.log(error);
+  		} else {
+    		console.log('Email sent: ' + info.response);
+  		}
+}); 
 });
 
 app.listen(3000, function () {
